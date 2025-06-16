@@ -26,8 +26,12 @@ class HomeScreen extends StatelessWidget {
       create: (context) => getIt<HomeBloc>()
         ..add(GetBrandsEvent())
         ..add(GetProductsEvent())
-        ..add(GetCategoriesEvent()),
-      child: BlocBuilder<HomeBloc, HomeState>(
+        ..add(GetCategoriesEvent())
+      ..add(GetCartEvent()),
+      child: BlocConsumer<HomeBloc, HomeState>(
+        listener: (context, state) {
+
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -98,11 +102,14 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.pushNamed(context, AppRoutesName.cart);
                         },
-                        child: Icon(
-                          Icons.shopping_cart,
-                          size: 30.0.sp,
-                          color: Color(0xff004182),
-                        ),
+                        child: Badge(
+                          label: Text(state.cartItems.toString()),
+                          child: Icon(
+                            Icons.shopping_cart,
+                            size: 30.0.sp,
+                            color: Color(0xff004182),
+                          ),
+                        )
                       ),
                     ],
                   ),

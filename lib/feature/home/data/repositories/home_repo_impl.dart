@@ -3,9 +3,13 @@ import 'package:e_commerce_app/core/errors/failuers.dart';
 import 'package:e_commerce_app/feature/home/data/data_sources/home_ds.dart';
 import 'package:e_commerce_app/feature/home/data/models/BrandsModel.dart';
 import 'package:e_commerce_app/feature/home/data/models/CategoriesModel.dart';
+import 'package:e_commerce_app/feature/home/data/models/ProductCartModel.dart';
 import 'package:e_commerce_app/feature/home/data/models/ProductModel.dart';
 import 'package:e_commerce_app/feature/home/domain/repositories/home_repo.dart';
 import 'package:injectable/injectable.dart';
+
+import '../models/CartModel.dart';
+
 @Injectable(as: HomeRepo)
 class HomeRepoImpl implements HomeRepo {
   HomeDs homeDs;
@@ -23,7 +27,7 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failures, CategoriesModel>> getCategories()async {
+  Future<Either<Failures, CategoriesModel>> getCategories() async {
     try {
       var result = await homeDs.getCategories();
       return Right(result);
@@ -33,9 +37,30 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failures, ProductModel>> getProducts()async {
+  Future<Either<Failures, ProductModel>> getProducts() async {
+    try {
+      var result = await homeDs.getProducts();
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failures, ProductCartModel>> addProductToCart(
+      String productId) async {
+    try {
+      var result = await homeDs.addProductToCart(productId);
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failures, CartModel>> getCart()async {
     try{
-      var result= await homeDs.getProducts();
+      var result= await homeDs.getCart();
       return Right(result);
     }catch(e){
       return Left(RemoteFailures(e.toString()));

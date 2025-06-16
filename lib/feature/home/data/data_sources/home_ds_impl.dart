@@ -1,10 +1,14 @@
 import 'package:e_commerce_app/core/api/api_manager.dart';
 import 'package:e_commerce_app/core/api/end_points.dart';
+import 'package:e_commerce_app/core/cache/shared_pref.dart';
 import 'package:e_commerce_app/feature/home/data/data_sources/home_ds.dart';
 import 'package:e_commerce_app/feature/home/data/models/BrandsModel.dart';
 import 'package:e_commerce_app/feature/home/data/models/CategoriesModel.dart';
+import 'package:e_commerce_app/feature/home/data/models/ProductCartModel.dart';
 import 'package:e_commerce_app/feature/home/data/models/ProductModel.dart';
 import 'package:injectable/injectable.dart';
+
+import '../models/CartModel.dart';
 
 @Injectable(as: HomeDs)
 class HomeDsImpl implements HomeDs {
@@ -29,5 +33,22 @@ class HomeDsImpl implements HomeDs {
     var response = await apiManager.getData(EndPoints.product);
     ProductModel productModel = ProductModel.fromJson(response.data);
     return productModel;
+  }
+
+  @override
+  Future<ProductCartModel> addProductToCart(String productId) async {
+    var response = await apiManager.postData(EndPoints.addProductToCart,
+        body: {"productId": productId},
+        header: {"token": CacheHelper.getData(key: "token")});
+    ProductCartModel model = ProductCartModel.fromJson(response.data);
+    return model;
+  }
+
+  @override
+  Future<CartModel> getCart() async {
+    var response = await apiManager.getData(EndPoints.addProductToCart,
+        header: {"token": CacheHelper.getData(key: "token")});
+    CartModel model = CartModel.fromJson(response.data);
+    return model;
   }
 }

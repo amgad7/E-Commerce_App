@@ -4,11 +4,15 @@ import 'package:e_commerce_app/core/errors/failuers.dart';
 import 'package:e_commerce_app/feature/home/data/models/BrandsModel.dart';
 import 'package:e_commerce_app/feature/home/data/models/CategoriesModel.dart';
 import 'package:e_commerce_app/feature/home/data/models/ProductModel.dart';
+import 'package:e_commerce_app/feature/home/domain/repositories/home_repo.dart';
 import 'package:e_commerce_app/feature/home/domain/use_cases/get_brands_useCase.dart';
+import 'package:e_commerce_app/feature/home/domain/use_cases/get_cart.dart';
 import 'package:e_commerce_app/feature/home/domain/use_cases/get_categories_useCase.dart';
 import 'package:e_commerce_app/feature/home/domain/use_cases/get_product_usecase.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/use_cases/add_product_to_cart.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -18,10 +22,14 @@ part 'home_bloc.freezed.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   GetBrandsUseCase getBrandsUseCase;
   GetProductUsecase getProductUsecase;
+  AddProductToCartUseCase addProductToCartUseCase;
   GetCategoriesUseCase getCategoriesUseCase;
+  GetCartUseCase getCartUseCase;
   HomeBloc(
       {required this.getBrandsUseCase,
       required this.getProductUsecase,
+      required this.addProductToCartUseCase,
+      required this.getCartUseCase,
       required this.getCategoriesUseCase})
       : super(const HomeState()) {
     on<GetBrandsEvent>((event, emit) async {
@@ -77,5 +85,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       },
     );
+    on<AddToCart>((event, emit)async {
+      emit(state.copyWith(addToCart: RequestStatus.loading));
+      var result = await addProductToCartUseCase(event.productID);
+      result.fold((l) {
+        emit(state.copyWith(addToCart: RequestStatus.failure));
+      }, (r) {
+        emit(state.copyWith(addToCart: RequestStatus.success));
+      },);
+    },);
+    
+    on<GetCartEvent>((event, emit)async {
+      emit(state.copyWith(getCartState: RequestStatus.loading,addToCart: RequestStatus.init));
+      var result = await getCartUseCase();
+      result.fold((l) {
+        emit(state.copyWith(getCartState: RequestStatus.failure));
+      },  (r) {
+        emit(state.copyWith(getCartState: RequestStatus.success,
+        cartItems: r.numOfCartItems ??0
+        ));
+      },);
+    },);
   }
 }
