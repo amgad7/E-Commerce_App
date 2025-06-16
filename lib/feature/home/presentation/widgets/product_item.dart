@@ -1,6 +1,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -120,13 +122,18 @@ class ProductItem extends StatelessWidget {
                               color: Colors.yellow,
                             ),
                             const Spacer(),
-                            Container(
-                                padding: EdgeInsets.all(5.w.h),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25.r),
-                                  color: AppColors.blueColor,
-                                ),
-                                child: const Icon(Icons.add, color: Colors.white))
+                            InkWell(
+                              onTap:  () {
+                                BlocProvider.of<HomeBloc>(context).add(AddToCart(product?.id??""));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.all(5.w.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25.r),
+                                    color: AppColors.blueColor,
+                                  ),
+                                  child: const Icon(Icons.add, color: Colors.white)),
+                            )
                           ],
                         ),
                       )
