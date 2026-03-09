@@ -1,12 +1,14 @@
 class ProductModel {
   ProductModel({
-      this.results, 
-      this.metadata, 
-      this.data,});
+    this.results,
+    this.metadata,
+    this.data,
+  });
 
   ProductModel.fromJson(dynamic json) {
     results = json['results'];
-    metadata = json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
+    metadata =
+        json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
@@ -29,31 +31,30 @@ class ProductModel {
     }
     return map;
   }
-
 }
 
 class Data {
   Data({
-      this.sold, 
-      this.images, 
-      this.subcategory, 
-      this.ratingsQuantity, 
-      this.id, 
-      this.title, 
-      this.slug, 
-      this.description, 
-      this.quantity, 
-      this.price, 
-      this.imageCover, 
-      this.category, 
-      this.brand, 
-      this.ratingsAverage, 
-      this.createdAt, 
-      this.updatedAt, 
-      });
+    this.sold,
+    this.images,
+    this.subcategory,
+    this.ratingsQuantity,
+    this.id,
+    this.title,
+    this.slug,
+    this.description,
+    this.quantity,
+    this.price,
+    this.imageCover,
+    this.category,
+    this.brand,
+    this.ratingsAverage,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   Data.fromJson(dynamic json) {
-    sold = json['sold'];
+    sold = (json['sold'] is num) ? (json['sold'] as num).toInt() : null;
     images = json['images'] != null ? json['images'].cast<String>() : [];
     if (json['subcategory'] != null) {
       subcategory = [];
@@ -61,20 +62,23 @@ class Data {
         subcategory?.add(Subcategory.fromJson(v));
       });
     }
-    ratingsQuantity = json['ratingsQuantity'];
+    ratingsQuantity = (json['ratingsQuantity'] is num)
+        ? (json['ratingsQuantity'] as num).toInt()
+        : null;
     id = json['_id'];
     title = json['title'];
     slug = json['slug'];
     description = json['description'];
-    quantity = json['quantity'];
-    price = json['price'];
+    quantity =
+        (json['quantity'] is num) ? (json['quantity'] as num).toInt() : null;
+    price = (json['price'] is num) ? (json['price'] as num).toInt() : null;
     imageCover = json['imageCover'];
-    category = json['category'] != null ? Category.fromJson(json['category']) : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
     brand = json['brand'] != null ? Brand.fromJson(json['brand']) : null;
     ratingsAverage = json['ratingsAverage'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-
   }
   int? sold;
   List<String>? images;
@@ -92,7 +96,6 @@ class Data {
   num? ratingsAverage;
   String? createdAt;
   String? updatedAt;
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -121,15 +124,15 @@ class Data {
 
     return map;
   }
-
 }
 
 class Brand {
   Brand({
-      this.id, 
-      this.name, 
-      this.slug, 
-      this.image,});
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+  });
 
   Brand.fromJson(dynamic json) {
     id = json['_id'];
@@ -150,15 +153,15 @@ class Brand {
     map['image'] = image;
     return map;
   }
-
 }
 
 class Category {
   Category({
-      this.id, 
-      this.name, 
-      this.slug, 
-      this.image,});
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+  });
 
   Category.fromJson(dynamic json) {
     id = json['_id'];
@@ -179,15 +182,15 @@ class Category {
     map['image'] = image;
     return map;
   }
-
 }
 
 class Subcategory {
   Subcategory({
-      this.id, 
-      this.name, 
-      this.slug, 
-      this.category,});
+    this.id,
+    this.name,
+    this.slug,
+    this.category,
+  });
 
   Subcategory.fromJson(dynamic json) {
     id = json['_id'];
@@ -208,15 +211,15 @@ class Subcategory {
     map['category'] = category;
     return map;
   }
-
 }
 
 class Metadata {
   Metadata({
-      this.currentPage, 
-      this.numberOfPages, 
-      this.limit, 
-      this.nextPage,});
+    this.currentPage,
+    this.numberOfPages,
+    this.limit,
+    this.nextPage,
+  });
 
   Metadata.fromJson(dynamic json) {
     currentPage = json['currentPage'];
@@ -237,5 +240,4 @@ class Metadata {
     map['nextPage'] = nextPage;
     return map;
   }
-
 }

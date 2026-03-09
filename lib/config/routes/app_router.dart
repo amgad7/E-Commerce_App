@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/feature/cart/presentation/pages/cart_screen.dart';
 import 'package:e_commerce_app/feature/home/presentation/pages/home.dart';
+import 'package:e_commerce_app/feature/orders/presentation/pages/orders_screen.dart';
 import 'package:e_commerce_app/feature/signUp/presentation/pages/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class AppRoutesName {
   static const String signUp = "signUp";
   static const String home = "home";
   static const String cart = "cart";
+  static const String orders = "orders";
 }
 
 class AppRoutes {
@@ -32,6 +34,10 @@ class AppRoutes {
       case AppRoutesName.cart:
         return MaterialPageRoute(
           builder: (context) => CartScreen(),
+        );
+      case AppRoutesName.orders:
+        return MaterialPageRoute(
+          builder: (context) => const OrdersScreen(),
         );
       default:
         return MaterialPageRoute(

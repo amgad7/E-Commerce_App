@@ -21,14 +21,17 @@ class ResponseEntity extends Equatable {
 
 class UserEntity {
   UserEntity({
+    this.id,
     this.name,
     this.email,
   });
 
   UserEntity.fromJson(dynamic json) {
+    id = json['_id'];
     name = json['name'];
     email = json['email'];
   }
+  String? id;
   String? name;
   String? email;
 }

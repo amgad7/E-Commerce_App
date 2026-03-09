@@ -51,4 +51,31 @@ class HomeDsImpl implements HomeDs {
     CartModel model = CartModel.fromJson(response.data);
     return model;
   }
+
+  @override
+  Future<CartModel> removeCartProduct(String productId) async {
+    var response = await apiManager.deleteData(
+        "${EndPoints.removeCartProduct}/$productId",
+        header: {"token": CacheHelper.getData(key: "token")});
+    CartModel model = CartModel.fromJson(response.data);
+    return model;
+  }
+
+  @override
+  Future<CartModel> updateCartProduct(String productId, int quantity) async {
+    var response = await apiManager.putData(
+        "${EndPoints.updateCartProduct}/$productId",
+        body: {"count": quantity},
+        header: {"token": CacheHelper.getData(key: "token")});
+    CartModel model = CartModel.fromJson(response.data);
+    return model;
+  }
+
+  @override
+  Future<CartModel> clearCart() async {
+    var response = await apiManager.deleteData(EndPoints.clearCart,
+        header: {"token": CacheHelper.getData(key: "token")});
+    CartModel model = CartModel.fromJson(response.data);
+    return model;
+  }
 }
