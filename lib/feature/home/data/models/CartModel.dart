@@ -20,6 +20,7 @@ class CartModel {
 
 class Data {
   Data({
+    this.id,
     this.cartOwner,
     this.products,
     this.createdAt,
@@ -29,6 +30,7 @@ class Data {
   });
 
   Data.fromJson(dynamic json) {
+    id = json['_id'];
     cartOwner = json['cartOwner'];
     if (json['products'] != null) {
       products = [];
@@ -42,6 +44,7 @@ class Data {
     totalCartPrice = json['totalCartPrice'];
   }
 
+  String? id;
   String? cartOwner;
   List<Products>? products;
   String? createdAt;
@@ -97,7 +100,7 @@ class Product {
         json['category'] != null ? Category.fromJson(json['category']) : null;
     brand = json['brand'] != null ? Brand.fromJson(json['brand']) : null;
     ratingsAverage = json['ratingsAverage'];
-    id = json['id'];
+    id = json['_id'];
   }
   List<Subcategory>? subcategory;
   String? id;

@@ -1,11 +1,6 @@
 import 'package:e_commerce_app/config.dart';
 import 'package:e_commerce_app/config/routes/app_router.dart';
-import 'package:e_commerce_app/core/api/api_manager.dart';
-import 'package:e_commerce_app/feature/home/data/data_sources/home_ds_impl.dart';
-import 'package:e_commerce_app/feature/home/data/repositories/home_repo_impl.dart';
-import 'package:e_commerce_app/feature/home/domain/use_cases/get_brands_useCase.dart';
-import 'package:e_commerce_app/feature/home/domain/use_cases/get_categories_useCase.dart';
-import 'package:e_commerce_app/feature/home/presentation/widgets/tabs/fav%20_tab.dart';
+import 'package:e_commerce_app/feature/home/presentation/widgets/tabs/fav _tab.dart';
 import 'package:e_commerce_app/feature/home/presentation/widgets/tabs/product_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,11 +22,9 @@ class HomeScreen extends StatelessWidget {
         ..add(GetBrandsEvent())
         ..add(GetProductsEvent())
         ..add(GetCategoriesEvent())
-      ..add(GetCartEvent()),
+        ..add(GetCartEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(
-        listener: (context, state) {
-
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -40,7 +33,7 @@ class HomeScreen extends StatelessWidget {
               leadingWidth: 83.w,
               leading: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SvgPicture.asset('assets/images/route.svg'),
+                child: SvgPicture.asset('assets/images/ecommerce-svgrepo-com.svg'),
               ),
             ),
             bottomNavigationBar: BottomNavigationBar(
@@ -99,18 +92,17 @@ class HomeScreen extends StatelessWidget {
                         width: 20,
                       ),
                       InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, AppRoutesName.cart);
-                        },
-                        child: Badge(
-                          label: Text(state.cartItems.toString()),
-                          child: Icon(
-                            Icons.shopping_cart,
-                            size: 30.0.sp,
-                            color: Color(0xff004182),
-                          ),
-                        )
-                      ),
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRoutesName.cart);
+                          },
+                          child: Badge(
+                            label: Text((state.cartItems).toString()),
+                            child: Icon(
+                              Icons.shopping_cart,
+                              size: 30.0.sp,
+                              color: Color(0xff004182),
+                            ),
+                          )),
                     ],
                   ),
                 ),

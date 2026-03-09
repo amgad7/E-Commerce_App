@@ -5,10 +5,13 @@ import 'package:e_commerce_app/feature/home/data/models/ProductModel.dart';
 
 import '../models/CartModel.dart';
 
-abstract class HomeDs{
-  Future<BrandsModel>getBrands();
-  Future<CategoriesModel>getCategories();
-  Future<ProductModel>getProducts();
-  Future<ProductCartModel>addProductToCart(String productId);
-  Future<CartModel>getCart();
+abstract class HomeDs {
+  Future<BrandsModel> getBrands();
+  Future<CategoriesModel> getCategories();
+  Future<ProductModel> getProducts();
+  Future<ProductCartModel> addProductToCart(String productId);
+  Future<CartModel> getCart();
+  Future<CartModel> removeCartProduct(String productId);
+  Future<CartModel> updateCartProduct(String productId, int quantity);
+  Future<CartModel> clearCart();
 }

@@ -58,11 +58,43 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failures, CartModel>> getCart()async {
-    try{
-      var result= await homeDs.getCart();
+  Future<Either<Failures, CartModel>> getCart() async {
+    try {
+      var result = await homeDs.getCart();
       return Right(result);
-    }catch(e){
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failures, CartModel>> removeCartProduct(
+      String productId) async {
+    try {
+      var result = await homeDs.removeCartProduct(productId);
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failures, CartModel>> updateCartProduct(
+      String productId, int quantity) async {
+    try {
+      var result = await homeDs.updateCartProduct(productId, quantity);
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failures, CartModel>> clearCart() async {
+    try {
+      var result = await homeDs.clearCart();
+      return Right(result);
+    } catch (e) {
       return Left(RemoteFailures(e.toString()));
     }
   }
